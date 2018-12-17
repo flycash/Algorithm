@@ -20,9 +20,25 @@ void print_left_node(struct TreeNode* root) {
 }
 
 int main() {
-    struct TreeNode root = {
-        .data=1
+    struct TreeNode leftRightLeft = {
+        .data = 7
     };
-
+    struct TreeNode leftRight= {
+        .left = &leftRightLeft,
+        .data =4
+    };
+    struct TreeNode left = {
+        .right = &leftRight,
+        .data = 3
+    };
+    struct TreeNode right = {
+        .data = 2
+    };
+    struct TreeNode root = {
+        .left = &left,
+        .right = &right,
+        .data = 1
+    };
+    print_left_node(&root);
     return 0;
 }
