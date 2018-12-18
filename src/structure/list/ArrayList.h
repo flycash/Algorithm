@@ -1,21 +1,23 @@
 
 typedef struct ArrayList {
     int size;
-    int incrementFactor;
+    float incrementFactor =1.2F;
     void * data[];
-}
+} ArrayList;
 
-void add(ArrayList list, void* data);
+ArrayList* createArrayList(int initSize, float incrementFactor);
 
-void insert(ArrayList list, int index, void* data);
+void add(ArrayList* list, void* data);
 
-void replace(ArrayList list, int index, void* data);
+void insert(ArrayList* list, int index, void* data);
 
-void remove(ArrayList list, int index);
+void replace(ArrayList* list, int index, void* data);
 
-void size(ArrayList list);
+void remove(ArrayList* list, int index);
 
-bool isEmpty(ArrayList list);
+void size(ArrayList* list);
 
-void clear(ArrayList list);
+bool isEmpty(ArrayList* list);
+
+void clear(ArrayList* list);
 
