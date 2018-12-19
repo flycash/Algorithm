@@ -1,7 +1,7 @@
 
 typedef struct ArrayList {
     int size;
-    float incrementFactor =1.2F;
+    float incrementFactor;
     void * data[];
 } ArrayList;
 
@@ -16,8 +16,6 @@ void replace(ArrayList* list, int index, void* data);
 void remove(ArrayList* list, int index);
 
 void size(ArrayList* list);
-
-bool isEmpty(ArrayList* list);
 
 void clear(ArrayList* list);
 

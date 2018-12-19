@@ -15,5 +15,20 @@
  *
  * =====================================================================================
  */
+#include "ArrayList.h"
+
+#define DEFAULT_INCREMENT_FACTOR = 1.2
+
+ArrayList* createArrayList(int initSize, float incrementFactor) {
+    ArrayList list;
+    if(incrementFactor <=0) {
+        list.incrementFactor = DEFAULT_INCREMENT_FACTOR;
+    } else {
+        list.incrementFactor = incrementFactor;
+    }
+    list.size = 0;
+    list.data = malloc(sizeof(void*)*initSize);
+    return &list
+}
 
 
