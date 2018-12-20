@@ -1,21 +1,32 @@
+#include <stddef.h>
 
 typedef struct ArrayList {
-    int size;
+    size_t size;
     float incrementFactor;
     void * data[];
 } ArrayList;
 
-ArrayList* createArrayList(int initSize, float incrementFactor);
+ArrayList* createArrayList(size_t initSize, float incrementFactor);
 
-void add(ArrayList* list, void* data);
+ArrayList* createArrayList(void* data[]);
 
-void insert(ArrayList* list, int index, void* data);
+bool add(ArrayList* list, void* data);
+
+bool insert(ArrayList* list, int index, void* data);
 
 void replace(ArrayList* list, int index, void* data);
 
-void remove(ArrayList* list, int index);
+void* remove(ArrayList* list, int index);
 
-void size(ArrayList* list);
+size_t size(ArrayList* list);
 
 void clear(ArrayList* list);
+
+void* get(ArrayList* list, size_t index);
+
+size_t indexOf(ArrayList* list, void* data);
+
+size_t lastIndexOf(ArrayList* list, void* data);
+
+void iterate(ArrayList* list, void* callback);
 

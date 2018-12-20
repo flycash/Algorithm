@@ -16,7 +16,7 @@
  * =====================================================================================
  */
 #include "ArrayList.h"
-
+#include <stdlib.h>
 #define DEFAULT_INCREMENT_FACTOR = 1.2
 
 ArrayList* createArrayList(int initSize, float incrementFactor) {
