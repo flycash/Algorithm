@@ -17,18 +17,38 @@
  */
 #include "ArrayList.h"
 #include <stdlib.h>
-#define DEFAULT_INCREMENT_FACTOR = 1.2
+#include <assert.h>
+#define DEFAULT_INCREMENT_FACTOR 1.2
 
-ArrayList* createArrayList(int initSize, float incrementFactor) {
-    ArrayList list;
+ArrayList* createArrayList(size_t initSize, float incrementFactor) {
+
+    ArrayList* list =(ArrayList*) malloc(sizeof(ArrayList));
+    assert(list);
     if(incrementFactor <=0) {
-        list.incrementFactor = DEFAULT_INCREMENT_FACTOR;
+        list->incrementFactor = DEFAULT_INCREMENT_FACTOR;
     } else {
-        list.incrementFactor = incrementFactor;
+        list->incrementFactor = incrementFactor;
     }
-    list.size = 0;
-    list.data = malloc(sizeof(void*)*initSize);
-    return &list
+    list->size = 0;
+    void* mem = malloc(sizeof(void *) * initSize);
+    assert(mem);
+    list->data = (void **) mem;
+    return list;
+}
+
+bool addIntoArrayList(ArrayList* list, void* data) {
+    if(isFullArrayList(list)){
+
+    }
+}
+
+bool isFulleArrayList(ArrayList* list) {
+    return list->size == list->capacity;
+}
+
+void extendArrayList(ArrayList* list) {
+    size_t newCapacity = list->capacity * list->incrementFactor;
+    void* newDatas = malloc(sizeof(void*) * newCapacity);
 }
 
 

@@ -1,32 +1,41 @@
 #include <stddef.h>
+#include <stdbool.h>
 
 typedef struct ArrayList {
+    size_t capacity;
     size_t size;
     float incrementFactor;
-    void * data[];
+    void** data;
 } ArrayList;
 
 ArrayList* createArrayList(size_t initSize, float incrementFactor);
 
-ArrayList* createArrayList(void* data[]);
+bool addIntoArrayList(ArrayList* list, void* data);
 
-bool add(ArrayList* list, void* data);
+//if index >=capacity, the capacity will be extend to  
+//index * incrementFactor
+bool insertIntoArrayList(ArrayList* list, size_t index, void* data);
 
-bool insert(ArrayList* list, int index, void* data);
+// it will return the old element of the index,
+// if the index>= capacity, it will do nothing and return NULL
+void* replaceFromArrayList(ArrayList* list, size_t index, void* data);
+// will return the element of the index. or NULL
+void* removeFromArrayList(ArrayList* list, size_t index);
 
-void replace(ArrayList* list, int index, void* data);
+size_t sizeOfArrayList(ArrayList* list);
 
-void* remove(ArrayList* list, int index);
+void clearArrayList(ArrayList* list);
 
-size_t size(ArrayList* list);
+void* getFromArrayList(ArrayList* list, size_t index);
 
-void clear(ArrayList* list);
+size_t indexOfArrayList(ArrayList* list, void* data);
 
-void* get(ArrayList* list, size_t index);
+size_t lastIndexOfArrayList(ArrayList* list, void* data);
 
-size_t indexOf(ArrayList* list, void* data);
+// callback must be a function that looks like
+// void doSomething(size_t index, void * data)
+void iterateArrayList(ArrayList* list, void* callback);
 
-size_t lastIndexOf(ArrayList* list, void* data);
+bool isEmptyArrayList(ArrayList* list);
 
-void iterate(ArrayList* list, void* callback);
-
+bool isFullArrayList(ArrayList* list);
