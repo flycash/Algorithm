@@ -19,7 +19,9 @@
 #include "ArrayList.c"
 
 int main() {
-    printf("Hello, World");
+    ArrayList* list = createArrayList(10, 1.1);
+    free(list);
+    printf("Hello, world!");
 }
 
 

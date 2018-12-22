@@ -13,7 +13,7 @@ ArrayList* createArrayList(size_t initSize, float incrementFactor);
 bool addIntoArrayList(ArrayList* list, void* data);
 
 //if index >=capacity, the capacity will be extend to  
-//index * incrementFactor
+//index * incrementFactor, and the element between [size, index) will be set to NULL]
 bool insertIntoArrayList(ArrayList* list, size_t index, void* data);
 
 // it will return the old element of the index,
