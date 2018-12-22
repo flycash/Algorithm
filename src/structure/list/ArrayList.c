@@ -36,19 +36,35 @@ ArrayList* createArrayList(size_t initSize, float incrementFactor) {
     return list;
 }
 
+
+void extendArrayList(ArrayList* list) {
+    size_t newCapacity = list->capacity * list->incrementFactor;
+    extendArrayListToTargetCapacity(list, newCapacity);
+}
+
+void extendArrayListToTargetCapacity(ArrayList* list, size_t newCapacity) {
+    void** newData = (void**) malloc(sizeof(void*) * newCapacity);
+    for(size_t i=0; i < list->size; i++) {
+        newData[i]=list->data[i];
+    }
+    list->data = newData;
+    list->capacity = newCapacity;
+}
+
 bool addIntoArrayList(ArrayList* list, void* data) {
     if(isFullArrayList(list)){
-
+        extendArrayList(list);
     }
+    list->data[list->size] = data;
+    list->size +=1;
+    return true;
 }
 
 bool isFulleArrayList(ArrayList* list) {
     return list->size == list->capacity;
 }
 
-void extendArrayList(ArrayList* list) {
-    size_t newCapacity = list->capacity * list->incrementFactor;
-    void* newDatas = malloc(sizeof(void*) * newCapacity);
+bool insertIntoArrayList(ArrayList* list, size_t index, void* data) {
+
+
 }
-
-
