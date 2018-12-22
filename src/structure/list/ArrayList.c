@@ -41,16 +41,6 @@ void extendArrayList(ArrayList* list) {
     size_t newCapacity = list->capacity * list->incrementFactor;
     extendArrayListToTargetCapacity(list, newCapacity);
 }
-
-void extendArrayListToTargetCapacity(ArrayList* list, size_t newCapacity) {
-    void** newData = (void**) malloc(sizeof(void*) * newCapacity);
-    for(size_t i=0; i < list->size; i++) {
-        newData[i]=list->data[i];
-    }
-    list->data = newData;
-    list->capacity = newCapacity;
-}
-
 bool addIntoArrayList(ArrayList* list, void* data) {
     if(isFullArrayList(list)){
         extendArrayList(list);
