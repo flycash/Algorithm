@@ -53,7 +53,6 @@ void extendArrayList(ArrayList* list) {
     extendArrayListToTargetCapacity(list, newCapacity);
 }
 
-void aa() { int a = 10; }
 bool addIntoArrayList(ArrayList* list, void* data) {
     if (isFullArrayList(list)) {
         extendArrayList(list);
