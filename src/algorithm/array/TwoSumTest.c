@@ -1,12 +1,12 @@
 /*
  * =====================================================================================
  *
- *       Filename:  two_sum.c
+ *       Filename:  TwoSumTest.c
  *
- *    Description:  leetcode two sum, see https://leetcode.com/problems/two-sum/
+ *    Description:  :two sum test
  *
  *        Version:  1.0
- *        Created:  2018/12/19 10时58分46秒
+ *        Created:  12/21/18 12:41:23
  *       Revision:  none
  *       Compiler:  gcc
  *
@@ -15,5 +15,13 @@
  *
  * =====================================================================================
  */
+#include <stdio.h>
+#include "TwoSumDouble.c"
 
-
+int main() {
+    int input[4] = {2, 7, 11, 15};
+    int target = 9;
+    int* result = twoSum(&input[0], 4, target);
+    printf("%d\n", result[0]);
+    printf("%d\n", result[1]);
+}
