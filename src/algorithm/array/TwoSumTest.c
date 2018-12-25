@@ -10,17 +10,18 @@
  *       Revision:  none
  *       Compiler:  gcc
  *
- *         Author:  flycash (https://www.jianshu.com/u/f2b47e5528d8), ming_flycash@foxmail.com
- *   Organization:  
+ *         Author:  flycash (https://www.jianshu.com/u/f2b47e5528d8),
+ * ming_flycash@foxmail.com
+ *   Organization:
  *
  * =====================================================================================
  */
 #include <stdio.h>
-#include "TwoSumDouble.c"
+#include "TwoSumSort.c"
 
 int main() {
-    int input[4] = {2, 7, 11, 15};
-    int target = 9;
+    int input[4] = {2, 5, 5, 11};
+    int target = 10;
     int* result = twoSum(&input[0], 4, target);
     printf("%d\n", result[0]);
     printf("%d\n", result[1]);
