@@ -20,9 +20,9 @@
 #include "TwoSumSort.c"
 
 int main() {
-    int input[4] = {2, 5, 5, 11};
-    int target = 10;
-    int* result = twoSum(&input[0], 4, target);
+    int input[5] = {-1, -2, -3, -4, -5};
+    int target = -8;
+    int* result = twoSum(&input[0], 5, target);
     printf("%d\n", result[0]);
     printf("%d\n", result[1]);
 }

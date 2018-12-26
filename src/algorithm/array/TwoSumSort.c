@@ -20,7 +20,6 @@
  * =====================================================================================
  */
 
-#include <stdio.h>
 #include <stdlib.h>
 
 int comp(const void* a, const void* b) {
@@ -34,12 +33,11 @@ int comp(const void* a, const void* b) {
  */
 int* twoSum(int* nums, int numsSize, int target) {
     int* result = malloc(sizeof(int) * 2);
-    result[0] = 0;
-    result[1] = 0;
+    result[0] = -1;
+    result[1] = -1;
 
     int* copy = malloc(sizeof(int) * numsSize);
     for (int i = 0; i < numsSize; i++) {
-        printf("%d", nums[i]);
         copy[i] = nums[i];
     }
     // sort
@@ -64,16 +62,16 @@ int* twoSum(int* nums, int numsSize, int target) {
     int first = nums[i];
     int second = nums[j];
 
-    printf("%d, %d, %d, %d", i, j, first, second);
-
     for (int k = 0; k < numsSize; k++) {
         int num = copy[k];
-        if (num == first) {
-            result[0] = k;
-        }
-        if (num == second && k > result[0]) {
-            result[1] = k;
-            break;
+        if (num == second || num == first) {
+            if (result[0] == -1) {
+                result[0] = k;
+                continue;
+            } else {
+                result[1] = k;
+                break;
+            }
         }
     }
     return result;
