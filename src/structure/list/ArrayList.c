@@ -39,20 +39,14 @@ ArrayList* createArrayList(size_t initSize, float incrementFactor) {
     return list;
 }
 
-void extendArrayListToTargetCapacity(ArrayList* list, size_t newCapacity) {
-    void** newData = malloc(sizeof(void*) * newCapacity);
+void destroyArrayList(ArrayList* list) {
     for (size_t i = 0; i < list->size; i++) {
-        newData[i] = list->data[i];
+        void* data = list->data[i];
+        free(data);
     }
-    list->data = newData;
-    list->capacity = newCapacity;
-}
 
-void extendArrayList(ArrayList* list) {
-    size_t newCapacity = list->capacity * list->incrementFactor;
-    extendArrayListToTargetCapacity(list, newCapacity);
+    free(list);
 }
-
 bool addIntoArrayList(ArrayList* list, void* data) {
     if (isFullArrayList(list)) {
         extendArrayList(list);
@@ -79,9 +73,13 @@ bool insertIntoArrayList(ArrayList* list, size_t index, void* data) {
             extendArrayList(list);
         }
         // move elements
-        for (size_t i = list->size; i < list->size; i++) {
+        for (size_t i = list->size - 1; i >= index; i++) {
+            list->data[i + 1] = list->data[i];
         }
+        list->data[index] = data;
     }
+
+    return true;
 }
 
 void* replaceFromArrayList(ArrayList* list, size_t index, void* data) {
@@ -93,3 +91,19 @@ void* replaceFromArrayList(ArrayList* list, size_t index, void* data) {
     list->data[index] = data;
     return oldData;
 }
+
+// private method, you should not call that;
+void extendArrayListToTargetCapacity(ArrayList* list, size_t newCapacity) {
+    void** newData = malloc(sizeof(void*) * newCapacity);
+    for (size_t i = 0; i < list->size; i++) {
+        newData[i] = list->data[i];
+    }
+    list->data = newData;
+    list->capacity = newCapacity;
+}
+
+void extendArrayList(ArrayList* list) {
+    size_t newCapacity = list->capacity * list->incrementFactor;
+    extendArrayListToTargetCapacity(list, newCapacity);
+}
+
