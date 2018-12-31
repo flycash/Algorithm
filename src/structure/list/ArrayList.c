@@ -147,6 +147,13 @@ size_t lastIndexOfArrayList(ArrayList* list, void* data) {
     return -1;
 }
 
+void iterateArrayList(ArrayList* list,
+                      void (*callback)(size_t index, void* data)) {
+    for (size_t i = 0; i < list->size; i++) {
+        (*callback)(i, list->data[i]);
+    }
+}
+
 // private method, you should not call that;
 void extendArrayListToTargetCapacity(ArrayList* list, size_t newCapacity) {
     void** newData = malloc(sizeof(void*) * newCapacity);

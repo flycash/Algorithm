@@ -21,6 +21,12 @@
 
 void testAdd() {}
 
+void callback(size_t index, void* data) {
+    if (data != NULL) {
+        printf("iterate, index: %lu, data: %d\n", index, *(int*)data);
+    }
+}
+
 int main() {
     ArrayList* list = createArrayList(1, 1.1);
     printf("Hello, I'm list");
@@ -50,6 +56,8 @@ int main() {
     *node5 = 5;
 
     replaceFromArrayList(list, 5, node5);
+
+    iterateArrayList(list, &callback);
 
     removeFromArrayList(list, 1);
 

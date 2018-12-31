@@ -25,6 +25,7 @@ void* replaceFromArrayList(ArrayList* list, size_t index, void* data);
 // will return the element of the index. or NULL
 void* removeFromArrayList(ArrayList* list, size_t index);
 
+// all elements in the list will be set to NULL
 size_t sizeOfArrayList(ArrayList* list);
 
 void clearArrayList(ArrayList* list);
@@ -37,7 +38,8 @@ size_t lastIndexOfArrayList(ArrayList* list, void* data);
 
 // callback must be a function that looks like
 // void doSomething(size_t index, void * data)
-void iterateArrayList(ArrayList* list, void* callback);
+void iterateArrayList(ArrayList* list,
+                      void (*callback)(size_t index, void* data));
 
 ArrayList* mapArrayList(ArrayList* list, void* mapFunc);
 
