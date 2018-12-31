@@ -10,6 +10,8 @@ typedef struct ArrayList {
 
 ArrayList* createArrayList(size_t initSize, float incrementFactor);
 
+void destroyArrayList(ArrayList* list);
+
 bool addIntoArrayList(ArrayList* list, void* data);
 
 // if index >=capacity, the capacity will be extend to

@@ -22,16 +22,47 @@
 void testAdd() {}
 
 int main() {
-    ArrayList* list = createArrayList(10, 1.1);
+    ArrayList* list = createArrayList(1, 1.1);
     printf("Hello, I'm list");
 
-    int node1 = 1;
-    int node2 = 2;
-    addIntoArrayList(list, &node1);
-    addIntoArrayList(list, &node2);
+    int* node1 = (int*)malloc(sizeof(int));
+    int* node2 = (int*)malloc(sizeof(int));
 
+    *node1 = 1;
+    *node2 = 2;
+
+    addIntoArrayList(list, node1);
+    printf("The capacity is %lu\n", list->capacity);
+    addIntoArrayList(list, node2);
+    printf("The capacity is %lu\n", list->capacity);
+
+    int* node3 = (int*)malloc(sizeof(int));
+    *node3 = 3;
+
+    insertIntoArrayList(list, 0, node3);
+
+    int* node4 = (int*)malloc(sizeof(int));
+    *node4 = 4;
+
+    insertIntoArrayList(list, 10, node4);
+
+    int* node5 = malloc(sizeof(int));
+    *node5 = 5;
+
+    replaceFromArrayList(list, 5, node5);
+
+    removeFromArrayList(list, 1);
+
+    size_t index = indexOfArrayList(list, node4);
+    size_t lastIndex = lastIndexOfArrayList(list, node4);
+    printf("index: %lu \n", index);
+    printf("last index: %lu \n", lastIndex);
     for (size_t i = 0; i < list->size; i++) {
-        printf("index: %lu, data: %d", i, *(int*)list->data[i]);
+        int* data = (int*)list->data[i];
+        if (data == NULL) {
+            continue;
+        }
+        printf("index: %lu, data: %d \n", i, *(int*)list->data[i]);
     }
 
     destroyArrayList(list);
