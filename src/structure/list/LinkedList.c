@@ -47,6 +47,7 @@ void addIntoLinkedList(LinkedList* list, void* data) {
         list->size = 1;
         return;
     }
+    list->tail->next = node;
     node->prev = list->tail;
     list->tail = node;
     list->size++;
@@ -65,12 +66,13 @@ bool insertIntoLinkedList(LinkedList* list, size_t index, void* data) {
         current = current->next;
     }
 
-    Node* currentNext = current->next;
-    node->prev = current;
-    node->next = currentNext;
+    Node* curPrev = current->prev;
+    node->next = current;
+    node->prev = curPrev;
+    current->prev = node;
 
-    if (currentNext != NULL) {
-        currentNext->prev = node;
+    if (index == 0) {
+        list->head = node;
     }
 
     list->size++;
@@ -145,5 +147,13 @@ void* removeFromLinkedListByIndex(LinkedList* list, size_t index) {
     return oldData;
 }
 
-void* iterateLinkedList(LinkedList* list,
-                        void (*callback)(size_t index, void* data)) {}
+void iterateLinkedList(LinkedList* list,
+                       void (*callback)(size_t index, void* data)) {
+    Node* current = list->head;
+    size_t i = 0;
+    while (i < list->size) {
+        callback(i, current->data);
+        current = current->next;
+        i++;
+    }
+}
