@@ -113,9 +113,37 @@ void* removeFromLinkedListByIndex(LinkedList* list, size_t index) {
         return NULL;
     }
 
+    if (list->size == 1) {
+        Node* node = list->head;
+        list->tail = NULL;
+        list->head = NULL;
+        list->size = 0;
+        void* ret = node->data;
+        free(node);
+        return ret;
+    }
+
     Node* current = list->head;
     for (size_t i = 0; i < index; i++) {
         current = current->next;
     }
     void* oldData = current->data;
+    if (current == list->head) {
+        list->head = current->next;
+        list->head->prev = NULL;
+    } else if (current == list->tail) {
+        list->tail = current->prev;
+        list->tail->next = NULL;
+    } else {
+        Node* curPrev = current->prev;
+        Node* curNext = current->next;
+        curPrev->next = curNext;
+        curNext->prev = curPrev;
+    }
+    free(current);
+    list->size--;
+    return oldData;
 }
+
+void* iterateLinkedList(LinkedList* list,
+                        void (*callback)(size_t index, void* data)) {}
