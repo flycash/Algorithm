@@ -25,43 +25,50 @@ struct ListNode {
     struct ListNode* next;
 };
 struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2) {
-    int carry = 0;
     int first = l1->val;
     int second = l2->val;
-    // struct ListNode* root = (struct ListNode*)malloc(sizeof(struct
-    // ListNode));
-    struct ListNode* root = NULL;
+    struct ListNode* root = (struct ListNode*)malloc(sizeof(struct ListNode));
+    int sum = first + second;
+    int carry = sum / 10;
+
+    if (carry == 1) {
+        root->val = sum - 10;
+    } else {
+        root->val = sum;
+    }
     struct ListNode* cur = root;
-    while (carry != 0 || first != 0 || second != 0) {
-        int sum = carry + first + second;
+
+    l1 = l1->next;
+    l2 = l2->next;
+
+    while (l1 != NULL || l2 != NULL || carry == 1) {
+        if (l1 != NULL) {
+            first = l1->val;
+            l1 = l1->next;
+        } else {
+            first = 0;
+        }
+
+        if (l2 != NULL) {
+            second = l2->val;
+            l2 = l2->next;
+        } else {
+            second = 0;
+        }
+        sum = first + second + carry;
         carry = sum / 10;
-        struct ListNode* node = malloc(sizeof(struct ListNode));
+
+        struct ListNode* node =
+            (struct ListNode*)malloc(sizeof(struct ListNode));
         if (carry == 1) {
             node->val = sum - 10;
         } else {
             node->val = sum;
         }
 
-        if (cur == NULL) {
-            root = cur = node;
-        } else {
-            cur->next = node;
-            cur = node;
-        }
-
-        if (l1->next == NULL) {
-            first = 0;
-        } else {
-            l1 = l1->next;
-            first = l1->val;
-        }
-
-        if (l2->next == NULL) {
-            second = 0;
-        } else {
-            l2 = l2->next;
-            second = l2->val;
-        }
+        cur->next = node;
+        cur = node;
     }
+
     return root;
 }
