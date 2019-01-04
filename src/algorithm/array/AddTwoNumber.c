@@ -36,6 +36,7 @@ struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2) {
     } else {
         root->val = sum;
     }
+    root->next = NULL;
     struct ListNode* cur = root;
 
     l1 = l1->next;
@@ -48,7 +49,6 @@ struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2) {
         } else {
             first = 0;
         }
-
         if (l2 != NULL) {
             second = l2->val;
             l2 = l2->next;
@@ -65,6 +65,7 @@ struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2) {
         } else {
             node->val = sum;
         }
+        node->next = NULL;
 
         cur->next = node;
         cur = node;
