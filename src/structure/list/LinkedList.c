@@ -80,6 +80,41 @@ bool insertIntoLinkedList(LinkedList* list, size_t index, void* data) {
     return true;
 }
 
+// remove the last ele in list
+void* removeTailFromLinkedList(LinkedList* list) {
+    if (list->size == 0) {
+        return NULL;
+    }
+    Node* tail = list->tail;
+    Node* tailPrev = tail->prev;
+    if (tailPrev != NULL) {
+        tailPrev->next = NULL;
+    } else {
+        // the list only has one node;
+        list->head = NULL;
+    }
+    list->tail = tailPrev;
+    list->size--;
+    return tail->data;
+}
+
+void* removeHeadFromLinkedList(LinkedList* list) {
+    if (list->size == 0) {
+        return NULL;
+    }
+
+    Node* head = list->head;
+    Node* headNext = head->next;
+    if (headNext == NULL) {
+        list->tail = NULL;
+    }
+
+    list->head = headNext;
+    list->size--;
+
+    return head->data;
+}
+
 void removeFromLinkedList(LinkedList* list, void* data) {
     Node* current = list->head;
     while (current != NULL) {
