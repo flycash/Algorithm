@@ -25,9 +25,16 @@ int compare(void* data1, void* data2) {
     return num1 - num2;
 }
 
+void callback(void* data) {
+    int num = *(int*)data;
+    printf("%d ", num);
+}
+
 int main() {
     int (*comparator)(void*, void*) = &compare;
     int* rootData = (int*)malloc(sizeof(int*));
     *rootData = 0;
     RedBlackTree* tree = createRedBlackTree(rootData, comparator);
+
+    bfs(tree, &callback);
 }

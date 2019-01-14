@@ -35,3 +35,4 @@ void enqueue(Queue* queue, void* data) { addIntoLinkedList(queue->list, data); }
 
 void* dequeue(Queue* queue) { return removeHeadFromLinkedList(queue->list); }
 
+bool isEmptyQueue(Queue* queue) { return queue->list->size == 0; }
