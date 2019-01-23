@@ -145,6 +145,126 @@ void addIntoRedBlackTree(RedBlackTree* tree, void* data) {
     tree->root->isRed = false;
 }
 
+/* *
+ * balance the tree
+ * */
+TreeNode* deleteBalance(TreeNode* root, int dir, bool* done) {
+    // the parent
+    TreeNode* p = root;
+
+    // thr brother
+    TreeNode* s = root->child[!dir];
+
+    // case reduction, remove red sibling
+    //
+    if (isRedNode(s)) {
+        root = singleRotation(root, dir);
+        s = root->child[!dir];
+    }
+    if (s != NULL) {
+        // s is black but not NULL;
+        if (!isRedNode(s->child[0]) && !isRedNode(s->child[1])) {
+            // children of s is NULL, or is black;
+            if (isRedNode(p)) {
+                // the parent(root) is red;
+                *done = true;
+            }
+
+            p->isRed = false;
+            s->isRed = true;
+        } else {
+            bool pIsRed = p->isRed;
+            bool newRoot = (root == p);
+
+            if (isRedNode(s->child[!dir])) {
+                p = singleRotation(p, dir);
+            } else {
+                p = doubleRotation(p, dir);
+            }
+
+            p->isRed = pIsRed;
+            p->child[0]->isRed = false;
+            p->child[1]->isRed = false;
+
+            if (newRoot) {
+                root = p;
+            } else {
+                root->child[dir] = p;
+            }
+            *done = true;
+        }
+    }
+    return root;
+}
+/*
+ * tree, data, root, done
+ * */
+TreeNode* deleteNodeFromRedBlackTree(RedBlackTree* tree, void* data,
+                                     TreeNode* root, bool* done) {
+    if (root == NULL) {
+        // can not find the target
+        *done = true;
+    } else {
+        int dir;
+        int cmpRes = tree->compare(root->data, data);
+        if (cmpRes == 0) {
+            // find the node
+
+            if (root->child[0] == NULL || root->child[1] == NULL) {
+                // one of the child is NULL, or both is NULL
+
+                TreeNode* child = root->child[root->child[0] == NULL];
+                // if child is NULL, means that root is a leaf node
+
+                if (isRedNode(root)) {
+                    // delete a red node, can finish the job;
+                    *done = true;
+                } else if (isRedNode(child)) {
+                    // child should be colored black
+                    child->isRed = false;
+                    *done = true;
+                }
+
+                free(root);
+                return child;
+            } else {
+                // root has two children
+                // find the predecessors
+                TreeNode* predecessors = root->child[0];
+                while (predecessors->child[1] != NULL) {
+                    predecessors = predecessors->child[1];
+                }
+
+                // set the root data;
+                root->data = predecessors->data;
+                data = predecessors->data;
+                // after this, we should delete the node whose data equals to
+                // data;
+            }
+        }
+
+        // we do not find the target node, recursive...
+        dir = cmpRes < 0;
+        root->child[dir] =
+            deleteNodeFromRedBlackTree(tree, data, root->child[dir], done);
+
+        if (!*done) {
+            root = deleteBalance(root, dir, done);
+        }
+    }
+    return root;
+}
+
+void deleteFromRedBlackTree(RedBlackTree* tree, void* data) {
+    bool done = false;
+    tree->root = deleteNodeFromRedBlackTree(tree, data, tree->root, &done);
+
+    if (tree->root != NULL) {
+        // should color the root black
+        tree->root->isRed = false;
+    }
+}
+
 // breadth-first search
 void bfs(RedBlackTree* tree, void (*callback)(void*)) {
     Queue* queue = createQueue();
