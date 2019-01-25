@@ -23,10 +23,11 @@
 #include <string.h>
 
 char* substr(char* s, int startIndex, int length) {
-    char* res = malloc(sizeof(char) * length);
+    char* res = malloc(sizeof(char) * (length + 1));
     for (int i = 0; i < length; i++) {
         res[i] = s[startIndex + i];
     }
+    res[length] = '\0';
     return res;
 }
 
@@ -35,8 +36,8 @@ char* longestPalindrome(char* s) {
     if (length == 1) {
         return s;
     }
-    int tLength = length * 2 + 1;
-    char* t = malloc(sizeof(char) * (tLength + 2));
+    int tLength = length * 2 + 3;
+    char* t = malloc(sizeof(char) * tLength + 2);
     t[0] = '^';
     t[1] = '#';
     for (int i = 0; i < length; i++) {
@@ -54,16 +55,16 @@ char* longestPalindrome(char* s) {
     int right = 0;
 
     for (int i = 1; i < tLength - 1; i++) {
-        int mirrorI = 2 * center - 1;
+        int mirrorI = 2 * center - i;
         if (right <= i) {
-            p[i] = 1;
+            p[i] = 0;
         } else if (right - i > p[mirrorI]) {
             p[i] = p[mirrorI];
         } else {
             p[i] = right - i;
         }
 
-        while (t[i + p[i]] == t[i - p[i]]) p[i]++;
+        while (t[i + 1 + p[i]] == t[i - 1 - p[i]]) p[i]++;
 
         if (i + p[i] > right) {
             right = i + p[i];

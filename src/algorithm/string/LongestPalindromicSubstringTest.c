@@ -21,8 +21,8 @@
 #include "LongestPalindromicSubstring.c"
 
 int main() {
-    char* s = "aba";
+    char* s = "babaddtattarrattatddetartrateedredividerb";
     char* res = longestPalindrome(s);
-    sprintf(res, "c");
+    printf("%s", res);
     return 0;
 }
