@@ -21,7 +21,13 @@
 #include <stdbool.h>
 #include <string.h>
 
-bool match(int i, int j, char* s, char* p, int slen, int plen) { return false; }
+bool match(int i, int j, char* s, char* p, int slen, int plen) {
+    if (s[i] == p[j] || p[j] == '.') {
+        return
+    }
+
+    return false;
+}
 
 bool isMatch(char* s, char* p) {
     int slen = strlen(s);
@@ -32,6 +38,6 @@ bool isMatch(char* s, char* p) {
     if (slen == 0) {
         return plen == 0;
     }
-    return match(0, 0, s, p);
+    return match(0, 0, s, p, slen, plen);
 }
 
