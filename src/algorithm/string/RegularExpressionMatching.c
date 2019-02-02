@@ -21,23 +21,31 @@
 #include <stdbool.h>
 #include <string.h>
 
-bool match(int i, int j, char* s, char* p, int slen, int plen) {
-    if (s[i] == p[j] || p[j] == '.') {
-        return
-    }
-
-    return false;
-}
-
 bool isMatch(char* s, char* p) {
     int slen = strlen(s);
     int plen = strlen(p);
-    if (plen == 0) {
-        return slen == 0;
+    bool dp[slen + 1][plen + 1];
+
+    for (int i = 0; i <= slen; i++) {
+        for (int j = 0; j <= plen; j++) {
+            dp[i][j] = false;
+        }
     }
-    if (slen == 0) {
-        return plen == 0;
+
+    dp[slen][plen] = true;
+
+    for (int i = slen; i >= 0; i--) {
+        for (int j = plen - 1; j >= 0; j--) {
+            bool firstMatch = (i < slen && (s[i] == p[j] || p[j] == '.'));
+
+            if (j + 1 < plen && p[j + 1] == '*') {
+                dp[i][j] = dp[i][j + 2] || (firstMatch && dp[i + 1][j]);
+            } else {
+                dp[i][j] = firstMatch && dp[i + 1][j + 1];
+            }
+        }
     }
-    return match(0, 0, s, p, slen, plen);
+
+    return dp[0][0];
 }
 
